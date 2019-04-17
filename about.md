@@ -3,4 +3,8 @@ layout: page
 title: About
 ---
 
-Something about me.
+> Life is dear
+>
+> love is dearer
+> 
+> Both can be given up for freedom.
