@@ -4,7 +4,7 @@ published: true
 ---
 
 
-## [](#header-2)图片的打开
+## [](#header-3)图片的打开
 
 *   从文件打开
 
@@ -25,7 +25,7 @@ response = requests.get("https://www.baidu.com/img/bd_logo1.png?where=super")
 image = Image.open(BytesIO(response.content))
 ```
 
-## [](#header-2)给图片添加文字
+## [](#header-3)给图片添加文字
 
 ```python
 from PIL import Image, ImageDraw
@@ -38,7 +38,7 @@ draw.text((100, 96), "Hello World", (18, 18, 18), font=font)
 # 第三个指定文章展示的颜色RGB值，第四个是格式对象
 ```
 
-## [](#header-2)图片叠加和保存
+## [](#header-3)图片叠加和保存
 
 ```python
 from PIL import Image, ImageDraw
@@ -51,7 +51,7 @@ image_base.convert('RGB').save('./images/result.png', 'PNG')
 # 以PNG的格式存储图片
 ```
 
-## [](#header-2)图片压缩和生成圆图像
+## [](#header-3)图片压缩和生成圆图像
 
 ```python
 from PIL import Image, ImageDraw
