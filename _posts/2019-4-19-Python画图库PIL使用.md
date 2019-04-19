@@ -1,7 +1,8 @@
 ---
-title: Python画图库使用
+title: Python画图库PIL使用
 published: true
 ---
+
 
 ## [](#header-2)图片的打开
 
@@ -10,7 +11,8 @@ published: true
 ```python
 from PIL import Image
 image = Image.open('./images/test.png')
-image = Image.open('./images/test.png').convert("RGBA")  #把图片装换成为RGBA模式
+image = Image.open('./images/test.png').convert("RGBA")
+# 把图片装换成为RGBA模式, 如果操作多张图片最好统一成为一种格式
 ```
 
 *   从Url网络文件打开
@@ -18,120 +20,66 @@ image = Image.open('./images/test.png').convert("RGBA")  #把图片装换成为R
 ```python
 import requests
 from PIL import Image
+from io import BytesIO
 response = requests.get("https://www.baidu.com/img/bd_logo1.png?where=super")
 image = Image.open(BytesIO(response.content))
 ```
 
-文本你可以**加粗**, _斜体_, 和~~删除~~ 或者`关键字`
+## [](#header-2)给图片添加文字
 
-[也可以加个链接](www.baidu.com)
+```python
+from PIL import Image, ImageDraw
+image = Image.open('./images/test.png').convert("RGBA")
+draw = ImageDraw.Draw(image)
+font = ImageFont.truetype("./Lato-Medium.ttf", 38)
+# 执行文章展示的格式，包括字体和大小，字体可以使用系统自带的文件，也可行下载一种字体文件，使用本地文件
+draw.text((100, 96), "Hello World", (18, 18, 18), font=font)
+# 第一个参数是坐上的像素点位置， 第二个位置展示的内容，需要上面选择的字体支持的文字才可以在图中正常展示，
+# 第三个指定文章展示的颜色RGB值，第四个是格式对象
+```
 
-# [](#header-1)标题一
+## [](#header-2)图片叠加和保存
 
-## [](#header-2)标题二
+```python
+from PIL import Image, ImageDraw
+image = Image.open('./images/test.png').convert("RGBA")
+image2 = Image.open('./images/test2.png').convert("RGBA")
+image.alpha_composite(image2, dest=(100, 100))
+# 把第二个图像覆盖到第一个坐上像素点为100，100的位置
 
-> 这是一个块引用
+image_base.convert('RGB').save('./images/result.png', 'PNG')
+# 以PNG的格式存储图片
+```
+
+## [](#header-2)图片压缩和生成圆图像
+
+```python
+from PIL import Image, ImageDraw
+image = Image.open('./images/test.png').convert("RGBA")
+width, height = image.size
+r2 = min(width, height)
+image = image.resize((r2, r2), Image.ANTIALIAS)
+# 压缩图片成为正方形的图片
+imb = Image.new('RGBA', (r2, r2), (255, 255, 255, 0))
+pima = image.load()
+pimb = imb.load()
+r = float(r2 / 2)
+
+# 取在圆内部的图片复制，其余为透明
+for i in range(r2):
+    for j in range(r2):
+        lx = abs(i - r + 0.5)
+        ly = abs(j - r + 0.5)
+        l = pow(lx, 2) + pow(ly, 2)
+        if l <= pow(r, 2):
+            pimb[i, j] = pima[i, j]
+
+# 这样imb就是原图像的圆图像
+```
+
+
+> **只是用到的一些函数的介绍**
 >
-> 足够重要的事都可以加块引用
-
-### [](#header-3)标题三
-
-```js
-// Js 代码高亮展示
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
-```ruby
-# Ruby 代码高亮展示
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
-
-#### [](#header-4)标题四
-
-*   这是一个无序列表
-*   这是一个无序列表
-*   这是一个无序列表
-
-##### [](#header-5)标题五
-
-1.  这是一个有序列表
-2.  这是一个有序列表
-3.  这是一个有序列表
-
-###### [](#header-6)标题六
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### 下面是一个分割线
+> 详细参见[PIL文档](https://pillow.readthedocs.io/en/stable/)
 
 * * *
-
-### 下面是一个无序列表:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### 下面是一个有序列表:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### 下面是一个嵌套的列表
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### 小图
-
-![](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### 大图
-
-![](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### 使用HTML语义定义列表
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-很长的单行代码块，不应该折叠。而是可以拉动，足够长的行才可以拉动，太短的不行，下面那条就是太短
-```
-
-```
-太短的代码块
-```
