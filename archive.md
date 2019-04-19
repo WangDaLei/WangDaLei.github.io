@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Archive
+title: 文章目录
 ---
 
 <section>
