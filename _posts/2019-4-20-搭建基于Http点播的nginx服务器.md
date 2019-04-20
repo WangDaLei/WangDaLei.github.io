@@ -4,44 +4,50 @@ published: true
 ---
 
 1.  这是一个有序列表
+
+    ```sh
     yum install automake autoconf make gcc gcc-c++
     yum install pcre pcre-devel
     yum install zlib zlib-devel
     yum install openssl openssl-devel
+    ```
+
 2.  这是一个有序列表
+
+    ```sh
     wget http://nginx.org/download/nginx-1.14.2.tar.gz
     tar xvf nginx-1.14.2.tar.gz
     ./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-http_flv_module --with-http_mp4_module --with-http_auth_request_module
     make
     make install
+    ```
+
 3.  这是一个有序列表
 
-1、安装依赖文件
-yum install automake autoconf make gcc gcc-c++
-yum install pcre pcre-devel
-yum install zlib zlib-devel
-yum install openssl openssl-devel
-2、获取,解压,编译nginx源码
-wget http://nginx.org/download/nginx-1.14.2.tar.gz
-tar xvf nginx-1.14.2.tar.gz
-./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-http_flv_module --with-http_mp4_module --with-http_auth_request_module
-make
-make install
-3、创建软连接
-删除原nginx, 创建软连接
-cd /usr/sbin
-ln -s /usr/local/nginx/sbin/nginx nginx 
+    ```sh
+    # 删除原nginx, 创建软连接
+    cd /usr/sbin
+    ln -s /usr/local/nginx/sbin/nginx nginx 
+    ```
 
-4、修改nginx配置
-cd /usr/local/nginx/conf
-vim nginx.conf
+4.  这是一个有序列表
 
-替换nginx文件配置为nginx.conf
+    ```sh
+    cd /usr/local/nginx/conf
+    vim nginx.conf
 
-5. 启动
-nginx
-停止
-kill -9 `ps aux|grep nginx| awk '{print $2}'`
+    # 替换nginx文件配置为nginx.conf
+    ```
+
+5.  启动
+
+    ```sh
+    nginx
+    # 停止
+    kill -9 `ps aux|grep nginx| awk '{print $2}'`
+    ```
+
+* * *
 
 文本你可以**加粗**, _斜体_, 和~~删除~~ 或者`关键字`
 
