@@ -8,6 +8,11 @@ title: 关于
 > love is dearer
 > 
 > Both can be given up for freedom.
+>
+>
+>
+>
+>
 
 
 
@@ -17,8 +22,4 @@ title: 关于
 
 
 
-
-
-
-
-Contact way: wangcppclei@gmail.com
+>                           Contact way: wangcppclei@gmail.com
