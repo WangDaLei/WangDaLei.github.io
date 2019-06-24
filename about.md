@@ -13,13 +13,4 @@ title: 关于
 >
 >
 >
-
-
-
-
-
-
-
-
-
->                           Contact way: wangcppclei@gmail.com
+> Contact way: wangcppclei@gmail.com
