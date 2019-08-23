@@ -142,6 +142,24 @@ ping redis-master
 
 ```
 
+python 编程测试
+```
+export PATH=/root/anaconda3/bin:$PATH
+python
+
+>>> import redis
+>>> pool = redis.ConnectionPool(host='redis-master', port=6379)
+>>> conn = redis.Redis(connection_pool=pool)
+>>> conn.get("x1")
+>>> conn.set("x1", "2222")
+True
+>>> conn.get("x1")
+b'2222'
+
+# host使用域名连接成功
+
+```
+
 
 **参考**：
 `https://www.digitalocean.com/community/tutorials/an-introduction-to-the-kubernetes-dns-service`
