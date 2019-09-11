@@ -15,92 +15,92 @@ Mysql与redis不同的是，MySQL默认用到磁盘存储数据，Mysql默认需
 
 1. 使用Secret存储密码信息, 如下所示，使用Secret存储两个变量，name和key，使用base64码表示
 
-```
-  apiVersion: v1
-  kind: Secret
-  metadata:
-    name: mysecret
-  type: Opaque
-  data:
-    name: YWRtaW4=
-    # admin
-    key: MWYyZDFlMmU2N2Rm
-    # 1f2d1e2e67df
-```
+  ```
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: mysecret
+    type: Opaque
+    data:
+      name: YWRtaW4=
+      # admin
+      key: MWYyZDFlMmU2N2Rm
+      # 1f2d1e2e67df
+  ```
 
 2. 使用PersistentVolumeClaim使用磁盘资源，可以指定访问模式，存储大小和存储类名
 
-```
-  apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: mysql-pvc
-    labels:
-      app: mysql-pvc
-  spec:
-    accessModes:
-    - ReadWriteMany
-    resources:
-      requests:
-        storage: 2Gi
-    storageClassName: standard
-```
+  ```
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: mysql-pvc
+      labels:
+        app: mysql-pvc
+    spec:
+      accessModes:
+      - ReadWriteMany
+      resources:
+        requests:
+          storage: 2Gi
+      storageClassName: standard
+  ```
 
 3. 在mysql中使用Secret和PersistentVolumeClaim资源，环境变量MYSQL_ROOT_PASSWORD使用secret中的内容，容器内的/var/lib/mysql路径挂载在PersistentVolumeClaim申请的资源上。
 
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mysql-server
-  labels:
-    app: python
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
+  ```
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: mysql-server
+    labels:
       app: python
-      tier: mysql
-  strategy:
-      type: Recreate
-  template:
-    metadata:
-      labels:
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
         app: python
         tier: mysql
-    spec:
-      containers:
-        - image: mysql
-          name: mysql
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysecret
-                  key: key
-          ports:
-            - containerPort: 3306
-              name: mysql
-          volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
-      volumes:
-        - name: mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: mysql-pvc
-```
+    strategy:
+        type: Recreate
+    template:
+      metadata:
+        labels:
+          app: python
+          tier: mysql
+      spec:
+        containers:
+          - image: mysql
+            name: mysql
+            env:
+              - name: MYSQL_ROOT_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: mysecret
+                    key: key
+            ports:
+              - containerPort: 3306
+                name: mysql
+            volumeMounts:
+              - name: mysql-persistent-storage
+                mountPath: /var/lib/mysql
+        volumes:
+          - name: mysql-persistent-storage
+            persistentVolumeClaim:
+              claimName: mysql-pvc
+  ```
 
 4. app yaml配置，指定环境变量来自于mysecret
 
-```
- ...
-  - name: MYSQL_ROOT_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: mysecret
-        key: key
- ...
-```
+  ```
+   ...
+    - name: MYSQL_ROOT_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mysecret
+          key: key
+   ...
+  ```
 
 ### [](#header-3)部署：
 
