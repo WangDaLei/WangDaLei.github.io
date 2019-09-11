@@ -13,7 +13,7 @@ Mysql与redis不同的是，MySQL默认用到磁盘存储数据，Mysql默认需
 
 ### [](#header-3)细节：
 
-1. 使用Secret存储密码信息, 如下所示，使用Secret存储两个变量，name和key，使用base64码表示
+*   使用Secret存储密码信息, 如下所示，使用Secret存储两个变量，name和key，使用base64码表示
 
   ```
     apiVersion: v1
@@ -28,7 +28,7 @@ Mysql与redis不同的是，MySQL默认用到磁盘存储数据，Mysql默认需
       # 1f2d1e2e67df
   ```
 
-2. 使用PersistentVolumeClaim使用磁盘资源，可以指定访问模式，存储大小和存储类名
+*   使用PersistentVolumeClaim使用磁盘资源，可以指定访问模式，存储大小和存储类名
 
   ```
     apiVersion: v1
@@ -46,7 +46,7 @@ Mysql与redis不同的是，MySQL默认用到磁盘存储数据，Mysql默认需
       storageClassName: standard
   ```
 
-3. 在mysql中使用Secret和PersistentVolumeClaim资源，环境变量MYSQL_ROOT_PASSWORD使用secret中的内容，容器内的/var/lib/mysql路径挂载在PersistentVolumeClaim申请的资源上。
+*   在mysql中使用Secret和PersistentVolumeClaim资源，环境变量MYSQL_ROOT_PASSWORD使用secret中的内容，容器内的/var/lib/mysql路径挂载在PersistentVolumeClaim申请的资源上。
 
   ```
   apiVersion: apps/v1
@@ -90,7 +90,7 @@ Mysql与redis不同的是，MySQL默认用到磁盘存储数据，Mysql默认需
               claimName: mysql-pvc
   ```
 
-4. app yaml配置，指定环境变量来自于mysecret
+*   app yaml配置，指定环境变量来自于mysecret
 
   ```
    ...
