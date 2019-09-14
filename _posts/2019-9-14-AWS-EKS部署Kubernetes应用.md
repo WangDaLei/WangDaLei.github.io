@@ -18,7 +18,7 @@ published: true
     Default output format [None]: json
   ```
 
-2.  安装eksctl
+1.  安装eksctl
 
   ```
     curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)\_amd64.tar.gz" | tar xz -C /tmp
@@ -28,7 +28,7 @@ published: true
     # GitTag 版本应至少为 0.1.37
   ```
 
-3.  下载并安装 kubectl
+1.  下载并安装 kubectl
  
   略
 
@@ -84,7 +84,6 @@ published: true
       app-69d7db5d6b-qd74z            1/1     Running   0          59m
       mysql-server-84f756bb5-d47db    1/1     Running   0          68m
       redis-master-6f855d55f8-rgqn8   1/1     Running   0          69m
-
     kubectl get service
       NAME           TYPE           CLUSTER-IP       EXTERNAL-IP                                                                   PORT(S)        AGE
       app            LoadBalancer   10.100.16.100    a56986b5ad69f11e98b10064a7947415-791164033.ap-southeast-1.elb.amazonaws.com   80:32670/TCP   59m
@@ -94,10 +93,11 @@ published: true
 ```
 
   验证是否部署完成：
-  
+
     访问 http://a56986b5ad69f11e98b10064a7947415-791164033.ap-southeast-1.elb.amazonaws.com/api/test/system/
 
-结果如图所示
+  结果如图所示
+  ![](https://raw.githubusercontent.com/WangDaLei/WangDaLei.github.io/master/images/eks-respnse.jpg)
 
   表示部署成功。
 
